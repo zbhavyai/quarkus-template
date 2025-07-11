@@ -10,12 +10,21 @@ RUN ./mvnw --batch-mode dependency:go-offline
 COPY src src
 RUN ./mvnw package -Dnative -DskipTests
 
+# Extract curl and its libraries
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.5 AS curl
+RUN microdnf install --assumeyes findutils
+RUN mkdir -p /curl-layer/bin /curl-layer/lib64 \
+    && cp /usr/bin/curl /curl-layer/bin/ \
+    && ldd /usr/bin/curl | awk '{print $3}' | xargs -I '{}' cp -v '{}' /curl-layer/lib64/ \
+
 # Runtime Stage
 FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
 LABEL maintainer="https://zbhavyai.github.io"
 LABEL repo="https://github.com/zbhavyai/boilerplate-java"
 WORKDIR /opt/app
 COPY --from=build /opt/app/target/boilerplate-java-*-runner /opt/app/boilerplate-java-runner
+COPY --from=curl /curl-layer/bin/curl /usr/bin/curl
+COPY --from=curl /curl-layer/lib64/ /lib64/
 RUN chmod 775 /opt/app/ /opt/app/boilerplate-java-runner \
     && chown -R 1001 /opt/app \
     && chmod -R "g+rwX" /opt/app \
