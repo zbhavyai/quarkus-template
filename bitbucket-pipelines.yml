@@ -4,14 +4,6 @@ pipelines:
   default:
     - parallel:
         - step:
-            name: Init
-            image: docker.io/atlassian/default-image:5
-            clone:
-              enabled: false
-            script:
-              - echo "Start pipeline execution"
-
-        - step:
             name: Build JAR
             image: docker.io/library/eclipse-temurin:21-jdk
             clone:
@@ -22,23 +14,23 @@ pipelines:
             script:
               - ./mvnw --batch-mode verify -DskipITs
             artifacts:
-              - target/*-runner.jar
+              - target/eisenhower-*-runner.jar
 
         - step:
-            name: Build native executable
-            image: quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:jdk-21
-            size: 2x
-            clone:
-              enabled: true
-              depth: 1
-            caches:
-              - maven
-            script:
-              - ./mvnw --batch-mode verify -Dnative -DskipITs
-            artifacts:
-              - target/*-runner
-
-        - step:
-            name: Git secrets scan
+            name: Secrets Scan
             script:
               - pipe: atlassian/git-secrets-scan:3.2.0
+
+    - step:
+        name: Build Native Executable
+        image: quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:jdk-21
+        size: 2x
+        clone:
+          enabled: true
+          depth: 1
+        caches:
+          - maven
+        script:
+          - ./mvnw --batch-mode verify -Dnative -DskipITs
+        artifacts:
+          - target/eisenhower-*-runner
