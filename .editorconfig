@@ -8,6 +8,9 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*sh]
+indent_size = 4
+
 [*java]
 max_line_length = 80
 
@@ -15,6 +18,7 @@ max_line_length = 80
 max_line_length = 200
 
 [*.md]
+indent_size = 3
 max_line_length = 999
 
 [Makefile]
