@@ -1,52 +1,68 @@
 CONTAINER_ENGINE := $(shell if command -v podman &>/dev/null; then echo podman; else echo docker; fi)
-DEPENDENCIES := $(CONTAINER_ENGINE) javac
 
-.PHONY: check-deps clean dev build build-native run run-native container-build container-run container-stop container-logs container-destroy help
-
-check-deps:
-	@for cmd in $(DEPENDENCIES); do \
+define CHECK_DEPENDENCY
+	@for cmd in $(1); do \
 		if ! command -v $$cmd &>/dev/null; then \
 			echo "Couldn't find $$cmd!"; \
 			exit 1; \
 		fi; \
 	done
+endef
 
-clean: check-deps
+.deps-backend:
+	$(call CHECK_DEPENDENCY, java, javac)
+
+.deps-container:
+	$(call CHECK_DEPENDENCY, $(CONTAINER_ENGINE))
+
+.PHONY: clean
+clean: .deps-backend
 	@./mvnw --quiet clean;
+	@echo "Cleaned build artifacts";
 
-dev: check-deps
-	@./mvnw quarkus:dev
+.PHONY: dev
+dev: .deps-backend
+	@./mvnw clean quarkus:dev
 
-build: check-deps
-	@./mvnw package -DskipTests
+.PHONY: build
+build: .deps-backend
+	@./mvnw clean package -DskipTests
 
-build-native: check-deps
-	@./mvnw package -Dnative -DskipTests
+.PHONY: build-native
+build-native:
+	@./mvnw clean package -Dnative -DskipTests
 
-run: check-deps
-	@java -jar ./target/boilerplate-java-1.0.0-runner.jar
+.PHONY: run
+run: .deps-backend
+	@java -jar ./target/quarkus-template-*-runner.jar
 
-run-native: check-deps
-	@./target/boilerplate-java-1.0.0-runner
+.PHONY: run-native
+run-native:
+	@./target/quarkus-template-*-runner
 
-container-build: check-deps
+.PHONY: container-build
+container-build: .deps-container
 	@$(CONTAINER_ENGINE) compose build
 
-container-run: check-deps
+.PHONY: container-run
+container-run: .deps-container
 	@$(CONTAINER_ENGINE) compose up --detach
 
-container-stop:
+.PHONY: container-stop
+container-stop: .deps-container
 	@$(CONTAINER_ENGINE) compose down
 
-container-logs:
+.PHONY: container-logs
+container-logs: .deps-container
 	@$(CONTAINER_ENGINE) compose logs --follow
 
-container-destroy:
+.PHONY: container-destroy
+container-destroy: .deps-container
 	@$(CONTAINER_ENGINE) compose down --volumes --rmi local
 
+.PHONY: help
 help:
 	@echo "Available targets:"
-	@echo "  check-deps        - Check for required system dependencies"
 	@echo "  clean             - Clean build artifacts"
 	@echo "  dev               - Start app in development mode"
 	@echo "  build             - Build app in JVM mode"

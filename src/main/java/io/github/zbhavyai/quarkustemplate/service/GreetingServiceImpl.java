@@ -1,6 +1,6 @@
-package io.github.zbhavyai.boilerplatejava.service;
+package io.github.zbhavyai.quarkustemplate.service;
 
-import io.github.zbhavyai.boilerplatejava.models.SimpleResponse;
+import io.github.zbhavyai.quarkustemplate.models.SimpleResponse;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.WebApplicationException;

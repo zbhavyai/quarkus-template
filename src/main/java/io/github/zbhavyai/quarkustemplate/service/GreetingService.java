@@ -1,4 +1,4 @@
-package io.github.zbhavyai.boilerplatejava.service;
+package io.github.zbhavyai.quarkustemplate.service;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.core.Response;

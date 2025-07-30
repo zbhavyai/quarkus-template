@@ -1,4 +1,4 @@
-package io.github.zbhavyai.boilerplatejava.models;
+package io.github.zbhavyai.quarkustemplate.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

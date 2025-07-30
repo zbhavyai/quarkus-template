@@ -1,11 +1,10 @@
-package io.github.zbhavyai.boilerplatejava.utils;
-
-import org.jboss.logging.Logger;
+package io.github.zbhavyai.quarkustemplate.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.jboss.logging.Logger;
 
 public class JSONMapper {
 

@@ -1,12 +1,12 @@
-name: boilerplate-java
+name: quarkus-template
 
 services:
-  boilerplate_java:
+  quarkus_template:
     build:
       context: .
       dockerfile: Dockerfile.native
-    image: boilerplate_java:1.0.0
-    container_name: boilerplate_java
+    image: quarkus-template:1.0.0
+    container_name: quarkus-template
     restart: unless-stopped
     ports:
       - 3005:3005

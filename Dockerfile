@@ -1,7 +1,5 @@
 # Build Stage
 FROM eclipse-temurin:21-jdk AS build
-LABEL maintainer="https://zbhavyai.github.io"
-LABEL repo="https://github.com/zbhavyai/boilerplate-java"
 WORKDIR /opt/app
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
@@ -11,9 +9,7 @@ RUN ./mvnw package -DskipTests
 
 # Runtime Stage
 FROM eclipse-temurin:21-jre
-LABEL maintainer="https://zbhavyai.github.io"
-LABEL repo="https://github.com/zbhavyai/boilerplate-java"
 WORKDIR /opt/app
-COPY --from=build /opt/app/target/boilerplate-java-*-runner.jar boilerplate-java-runner.jar
+COPY --from=build /opt/app/target/quarkus-template-*-runner.jar quarkus-template-runner.jar
 EXPOSE 3005
-CMD ["java", "-jar", "/opt/app/boilerplate-java-runner.jar"]
+CMD ["java", "-jar", "/opt/app/quarkus-template-runner.jar"]

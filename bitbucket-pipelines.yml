@@ -19,16 +19,16 @@ pipelines:
             script:
               - ./mvnw --batch-mode verify -DskipITs
             artifacts:
-              - target/eisenhower-*-runner.jar
+              - target/quarkus-template-*-runner.jar
             after-script:
               - if [ "$BITBUCKET_EXIT_CODE" -ne 0 ]; then
                 echo "[ERROR] Build failed, skipping artifact upload."
                 return 1
               - fi
               - SANITIZED_BRANCH_NAME=$(echo "$BITBUCKET_BRANCH" | sed 's/[^a-zA-Z0-9_-]/_/g')
-              - JAR_FILE_PATH=$(ls target/eisenhower-*-runner.jar)
+              - JAR_FILE_PATH=$(ls target/quarkus-template-*-runner.jar)
               - JAR_FILE=$(basename "$JAR_FILE_PATH")
-              - TAR_BALL_NAME="eisenhower-${SANITIZED_BRANCH_NAME}-$BITBUCKET_BUILD_NUMBER-runner-jar.tar.gz"
+              - TAR_BALL_NAME="quarkus-template-${SANITIZED_BRANCH_NAME}-$BITBUCKET_BUILD_NUMBER-runner-jar.tar.gz"
               - tar -czf "$TAR_BALL_NAME" -C "$(dirname "$JAR_FILE_PATH")" "$JAR_FILE"
               - pipe: atlassian/bitbucket-upload-file:0.7.4
                 variables:
@@ -47,16 +47,16 @@ pipelines:
             script:
               - ./mvnw --batch-mode verify -Dnative -DskipITs
             artifacts:
-              - target/eisenhower-*-runner
+              - target/quarkus-template-*-runner
             after-script:
               - if [ "$BITBUCKET_EXIT_CODE" -ne 0 ]; then
                 echo "[ERROR] Build failed, skipping artifact upload."
                 return 1
               - fi
               - SANITIZED_BRANCH_NAME=$(echo "$BITBUCKET_BRANCH" | sed 's/[^a-zA-Z0-9_-]/_/g')
-              - NATIVE_FILE_PATH=$(ls target/eisenhower-*-runner)
+              - NATIVE_FILE_PATH=$(ls target/quarkus-template-*-runner)
               - NATIVE_FILE=$(basename "$NATIVE_FILE_PATH")
-              - TAR_BALL_NAME="eisenhower-${SANITIZED_BRANCH_NAME}-$BITBUCKET_BUILD_NUMBER-native-executable.tar.gz"
+              - TAR_BALL_NAME="quarkus-template-${SANITIZED_BRANCH_NAME}-$BITBUCKET_BUILD_NUMBER-native-executable.tar.gz"
               - tar -czf "$TAR_BALL_NAME" -C "$(dirname "$NATIVE_FILE_PATH")" "$NATIVE_FILE"
               - pipe: atlassian/bitbucket-upload-file:0.7.4
                 variables:

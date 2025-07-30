@@ -1,7 +1,5 @@
 # Build stage
 FROM quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:jdk-21 AS build
-LABEL maintainer="https://zbhavyai.github.io"
-LABEL repo="https://github.com/zbhavyai/boilerplate-java"
 WORKDIR /opt/app
 COPY --chown=quarkus:quarkus pom.xml mvnw ./
 COPY --chown=quarkus:quarkus .mvn .mvn
@@ -19,16 +17,14 @@ RUN mkdir -p /curl-layer/bin /curl-layer/lib64 \
 
 # Runtime Stage
 FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
-LABEL maintainer="https://zbhavyai.github.io"
-LABEL repo="https://github.com/zbhavyai/boilerplate-java"
 WORKDIR /opt/app
-COPY --from=build /opt/app/target/boilerplate-java-*-runner /opt/app/boilerplate-java-runner
+COPY --from=build /opt/app/target/quarkus-template-*-runner /opt/app/quarkus-template-runner
 COPY --from=curl /curl-layer/bin/curl /usr/bin/curl
 COPY --from=curl /curl-layer/lib64/ /lib64/
-RUN chmod 775 /opt/app/ /opt/app/boilerplate-java-runner \
+RUN chmod 775 /opt/app/ /opt/app/quarkus-template-runner \
     && chown -R 1001 /opt/app \
     && chmod -R "g+rwX" /opt/app \
     && chown -R 1001:root /opt/app
 EXPOSE 3005
 USER 1001
-CMD ["/opt/app/boilerplate-java-runner"]
+CMD ["/opt/app/quarkus-template-runner"]

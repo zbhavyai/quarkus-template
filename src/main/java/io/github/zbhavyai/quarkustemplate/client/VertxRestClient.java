@@ -1,7 +1,7 @@
-package io.github.zbhavyai.boilerplatejava.client;
+package io.github.zbhavyai.quarkustemplate.client;
 
-import io.github.zbhavyai.boilerplatejava.models.SimpleResponse;
-import io.github.zbhavyai.boilerplatejava.utils.JSONMapper;
+import io.github.zbhavyai.quarkustemplate.models.SimpleResponse;
+import io.github.zbhavyai.quarkustemplate.utils.JSONMapper;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mutiny.core.MultiMap;

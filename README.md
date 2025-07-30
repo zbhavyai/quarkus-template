@@ -1,4 +1,4 @@
-# Boilerplate Java
+# Quarkus Template
 
 Use this boilerplate code to author Java applications using Quarkus.
 
