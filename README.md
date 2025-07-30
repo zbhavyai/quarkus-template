@@ -1,39 +1,56 @@
 # Quarkus Template
 
-Use this boilerplate code to author Java applications using Quarkus.
+A quick starter template for writing backend application using [Quarkus](https://quarkus.io/), the supersonic-subatomic framework for Java.
 
-## Running dev mode
+> [!NOTE]
+> This is not a full-blown backend application written in Quarkus, rather just enough to get started with a new project with some useful extensions and properties configured that are suitable for my own needs.
 
-You can run your application in dev mode that enables live coding using below. Dev UI should be accessible at [http://localhost:3005/q/dev-ui/](http://localhost:3005/q/dev-ui/).
+## Development
+
+Before you start development on this project, run the prep target. This will install a hook that would check your commit for code formatting issues.
+
+```shell
+make prep
+```
+
+Run the application in dev mode that enables live coding. Quarkus dev UI would be accessible at [http://127.0.0.1:3005/q/dev-ui/welcome](http://127.0.0.1:3002/q/dev-ui/welcome).
 
 ```shell
 make dev
 ```
 
-## Packaging and running JAR
+To format the code, enable [google-java-format](https://github.com/google/google-java-format) and in your IDE and turn on the auto-formatting on save. You may also run spotless plugin manually.
 
-1. Build the JAR
+```shell
+make format
+```
 
-   ```shell
-   make build
-   ```
+## Packaging and running
 
-2. Run the JAR
+Build the application
 
-   ```shell
-   make run
-   ```
+```shell
+make build
 
-## Packaging and running native executable
+# OR
 
-1. Build native executable
+make build-native
 
-   ```shell
-   make build-native
-   ```
+# OR
 
-2. Run the executable
+make container-build
+```
 
-   ```shell
-   make run-native
-   ```
+Run the application
+
+```shell
+make run
+
+# OR
+
+make run-native
+
+# OR
+
+make container-run
+```
