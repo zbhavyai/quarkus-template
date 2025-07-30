@@ -12,7 +12,9 @@ A quick starter template for writing backend application using [Quarkus](https:/
 -  Opinionated configuration in `application.properties`
 -  Opinionated settings and extension recommendations for VS Code (I use IntelliJ IDEA though :smile:)
 -  Formatting using `google-java-format` and enforced using Spotless plugin and a pre-commit hook
--  Make targets for tasks like building and running application locally and in containers
+-  Dockerfile and Docker Compose for building and running the application in containers
+-  Automatic switching between Podman and Docker based on installation
+-  Make targets for common tasks like formatting, building, and running the application locally and in containers
 -  CI/CD using Bitbucket Pipelines to build the application
 
 ## Development
