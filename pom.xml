@@ -17,6 +17,7 @@
     <quarkus.platform.version>3.18.4</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.2.5</surefire-plugin.version>
+    <spotless.version>2.44.0</spotless.version>
   </properties>
 
   <dependencyManagement>
@@ -135,6 +136,29 @@
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
             <maven.home>${maven.home}</maven.home>
           </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>${spotless.version}</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <java>
+            <googleJavaFormat>
+              <version>1.28.0</version>
+              <style>GOOGLE</style>
+              <reflowLongStrings>true</reflowLongStrings>
+              <formatJavadoc>true</formatJavadoc>
+            </googleJavaFormat>
+          </java>
         </configuration>
       </plugin>
     </plugins>

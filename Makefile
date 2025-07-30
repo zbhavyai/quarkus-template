@@ -15,6 +15,11 @@ endef
 .deps-container:
 	$(call CHECK_DEPENDENCY, $(CONTAINER_ENGINE))
 
+.PHONY: prep
+prep:
+	@ln -sf $(CURDIR)/.hooks/pre-commit .git/hooks/pre-commit
+	@echo "Hook installed";
+
 .PHONY: clean
 clean: .deps-backend
 	@./mvnw --quiet clean;
@@ -23,6 +28,10 @@ clean: .deps-backend
 .PHONY: dev
 dev: .deps-backend
 	@./mvnw clean quarkus:dev
+
+.PHONY: format
+format: .deps-backend
+	@./mvnw spotless:apply
 
 .PHONY: build
 build: .deps-backend
@@ -63,8 +72,10 @@ container-destroy: .deps-container
 .PHONY: help
 help:
 	@echo "Available targets:"
+	@echo "  prep              - Install git hooks"
 	@echo "  clean             - Clean build artifacts"
 	@echo "  dev               - Start app in development mode"
+	@echo "  format            - Format code using Spotless"
 	@echo "  build             - Build app in JVM mode"
 	@echo "  build-native      - Build app in native mode"
 	@echo "  run               - Run app in JVM mode"
