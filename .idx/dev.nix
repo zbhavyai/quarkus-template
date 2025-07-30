@@ -15,9 +15,10 @@
 
   idx = {
     extensions = [
+      "editorconfig.editorconfig"
       "esbenp.prettier-vscode"
-      "foxundermoon.shell-format"
       "josevseb.google-java-format-for-vs-code"
+      "mkhl.shfmt",
       "pkief.material-icon-theme"
       "redhat.java"
       "redhat.vscode-microprofile"
