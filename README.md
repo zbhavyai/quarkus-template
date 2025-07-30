@@ -5,6 +5,16 @@ A quick starter template for writing backend application using [Quarkus](https:/
 > [!NOTE]
 > This is not a full-blown backend application written in Quarkus, rather just enough to get started with a new project with some useful extensions and properties configured that are suitable for my own needs.
 
+## Highlights
+
+-  Reactive code
+-  Opinionated project structure
+-  Opinionated configuration in `application.properties`
+-  Opinionated settings and extension recommendations for VS Code (I use IntelliJ IDEA though :smile:)
+-  Formatting using `google-java-format` and enforced using Spotless plugin and a pre-commit hook
+-  Make targets for tasks like building and running application locally and in containers
+-  CI/CD using Bitbucket Pipelines to build the application
+
 ## Development
 
 -  Before you start development on this project, run the prep target. This will install a hook that would check your commit for code formatting issues.
