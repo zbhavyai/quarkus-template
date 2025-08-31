@@ -4,23 +4,37 @@
 [![Release](https://img.shields.io/github/actions/workflow/status/zbhavyai/quarkus-template/release.yml?label=Release)](https://github.com/zbhavyai/quarkus-template/actions/workflows/release.yml)
 [![License](https://img.shields.io/github/license/zbhavyai/quarkus-template?label=License)](https://github.com/zbhavyai/quarkus-template/blob/main/LICENSE)
 
-A starter template for writing backend application using [Quarkus](https://quarkus.io/), the supersonic-subatomic framework for Java.
+A **starter template** for building backend applications with [Quarkus](https://quarkus.io/), the _supersonic-subatomic_ Java framework.
 
 > [!NOTE]
-> This is not a full-blown backend application written in Quarkus, rather just enough to get started with a new project with some useful extensions and properties configured that are suitable for my own needs.
+> This is not a production-ready backend. It's a boilerplate with extensions, configs, and workflows I find useful for new projects.
 
-## Highlights
+## :sparkles: Features
 
--  Opinionated project structure.
--  Opinionated configurations in `application.properties`.
--  Opinionated settings and extension recommendations for VS Code (I use IntelliJ IDEA though :smile:, refer to my settings [here](https://github.com/zbhavyai/fedora-setup/tree/main/roles/intellij_idea/files) if interested).
--  Formatting using `google-java-format` and enforced using Spotless plugin and a pre-commit hook.
--  Dockerfile and Docker Compose for building and running the application in containers.
--  Automatic switching between Podman and Docker based on installation.
--  Make targets for common tasks like formatting, building, and running the application locally and in containers.
--  CI/CD using GitHub Actions and Bitbucket Pipelines to test, build, and release the application.
+-  **Opinionated setup**
 
-## Development
+   -  Predefined project structure and `application.properties`.
+   -  Recommended VS Code settings (and some IntelliJ configs are [here](https://github.com/zbhavyai/fedora-setup/tree/main/roles/intellij_idea/files) if interested).
+
+-  **Code quality**
+
+   -  Formatting via [`google-java-format`](https://github.com/google/google-java-format).
+   -  Enforced with [Spotless](https://github.com/diffplug/spotless) and a pre-commit hook.
+
+-  **Containerization**
+
+   -  `Dockerfile` + `docker-compose.yml`.
+   -  Automatic Podman/Docker detection.
+
+-  **Developer tooling**
+
+   -  `Makefile` targets for formatting, building, running, and container workflows.
+
+-  **CI/CD ready**
+
+   -  GitHub Actions + Bitbucket Pipelines for test, build, and release.
+
+## :rocket: Getting started
 
 -  Before you start development on this project, run the prep target. This will install a hook that would check your commit for code formatting issues.
 
@@ -40,7 +54,7 @@ A starter template for writing backend application using [Quarkus](https://quark
    make format
    ```
 
-## Packaging and running
+## :package: Packaging and running
 
 1. Build the application
 
@@ -61,3 +75,7 @@ A starter template for writing backend application using [Quarkus](https://quark
 
    make container-run
    ```
+
+## :page_facing_up: License
+
+The Quarkus Template is licensed under the terms of the [MIT license](LICENSE).
