@@ -1,0 +1,71 @@
+---
+name: Build
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          architecture: x64
+          cache: maven
+
+      - name: Run tests
+        run: ./mvnw --batch-mode test
+
+      - name: Upload test reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-${{ github.sha }}
+          path: target/surefire-reports/*
+          retention-days: 7
+          if-no-files-found: ignore
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          architecture: x64
+          cache: maven
+
+      - name: Build JAR
+        run: ./mvnw --batch-mode verify -DskipTests
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: runner-jar-${{ github.sha }}
+          path: target/quarkus-template-*-runner.jar
+          retention-days: 7
+          if-no-files-found: error
