@@ -23,10 +23,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download built JAR
+      - name: Download JAR
         uses: actions/download-artifact@v4
         with:
-          name: application-jar-${{ github.sha }}
+          name: runner-jar-${{ github.sha }}
           path: target
 
       - name: Rename JAR to match git tag

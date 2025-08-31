@@ -59,13 +59,13 @@ jobs:
           architecture: x64
           cache: maven
 
-      - name: Build application
+      - name: Build JAR
         run: ./mvnw --batch-mode verify -DskipTests
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
-          name: application-jar-${{ github.sha }}
+          name: runner-jar-${{ github.sha }}
           path: target/quarkus-template-*-runner.jar
           retention-days: 7
           if-no-files-found: error
