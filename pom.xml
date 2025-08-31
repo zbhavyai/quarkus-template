@@ -6,8 +6,8 @@
   <groupId>io.github.zbhavyai</groupId>
   <artifactId>quarkus-template</artifactId>
   <version>1.0.0</version>
-  <name>${artifactId}</name>
-  <description>${artifactId}</description>
+  <name>${project.artifactId}</name>
+  <description>${project.artifactId}</description>
   <url>https://www.github.com/zbhavyai/quarkus-template</url>
 
   <properties>
