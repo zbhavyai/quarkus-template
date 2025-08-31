@@ -35,7 +35,7 @@ jobs:
         run: |
           ORIGINAL_JAR=$(ls target/quarkus-template-*-runner.jar | head -n 1)
           if [ -z "$ORIGINAL_JAR" ]; then
-            echo "No JAR found in target/"
+            echo "No JAR found"
             exit 1
           fi
           NEW_JAR="target/quarkus-template-${CURRENT_TAG}.jar"

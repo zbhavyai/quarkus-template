@@ -1,0 +1,64 @@
+image: docker.io/atlassian/default-image:5
+
+definitions:
+  steps:
+    - step: &test
+        name: Run tests
+        image: docker.io/library/eclipse-temurin:21-jdk
+        clone:
+          enabled: true
+        caches:
+          - maven
+        script:
+          - ./mvnw --batch-mode test
+        artifacts:
+          - target/surefire-reports/**
+
+    - step: &build-jar
+        name: Build JAR
+        image: docker.io/library/eclipse-temurin:21-jdk
+        clone:
+          enabled: true
+        caches:
+          - maven
+        script:
+          - ./mvnw --batch-mode verify -DskipTests
+        artifacts:
+          - target/quarkus-template-*-runner.jar
+
+    - step: &release
+        name: Create release
+        image: docker.io/library/eclipse-temurin:21-jdk
+        clone:
+          enabled: true
+        script:
+          - ORIGINAL_JAR=$(ls target/quarkus-template-*-runner.jar | head -n 1)
+          - if [ -z "$ORIGINAL_JAR" ]; then
+            echo "No JAR found"
+            exit 1
+            fi
+          - RELEASE_JAR="quarkus-template-${BITBUCKET_TAG}.jar"
+          - echo "Renaming $ORIGINAL_JAR -> target/$RELEASE_JAR"
+          - mv "$ORIGINAL_JAR" "target/$RELEASE_JAR"
+        after-script:
+          - pipe: atlassian/bitbucket-upload-file:0.7.4
+            variables:
+              BITBUCKET_ACCESS_TOKEN: "$BITPIPE"
+              FILENAME: "target/$RELEASE_JAR"
+
+pipelines:
+  branches:
+    "**":
+      - step: *test
+      - step: *build-jar
+
+  pull-requests:
+    "main":
+      - step: *test
+      - step: *build-jar
+
+  tags:
+    "v*.*.*":
+      - step: *test
+      - step: *build-jar
+      - step: *release
