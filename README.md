@@ -9,6 +9,17 @@ A starter template for writing backend application using [Quarkus](https://quark
 > [!NOTE]
 > This is not a full-blown backend application written in Quarkus, rather just enough to get started with a new project with some useful extensions and properties configured that are suitable for my own needs.
 
+## Highlights
+
+-  Opinionated project structure.
+-  Opinionated configurations in `application.properties`.
+-  Opinionated settings and extension recommendations for VS Code (I use IntelliJ IDEA though :smile:, refer to my settings [here](https://github.com/zbhavyai/fedora-setup/tree/main/roles/intellij_idea/files) if interested).
+-  Formatting using `google-java-format` and enforced using Spotless plugin and a pre-commit hook.
+-  Dockerfile and Docker Compose for building and running the application in containers.
+-  Automatic switching between Podman and Docker based on installation.
+-  Make targets for common tasks like formatting, building, and running the application locally and in containers.
+-  CI/CD using GitHub Actions and Bitbucket Pipelines to test, build, and release the application.
+
 ## Development
 
 -  Before you start development on this project, run the prep target. This will install a hook that would check your commit for code formatting issues.
