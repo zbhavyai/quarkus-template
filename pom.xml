@@ -50,6 +50,24 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-rest-jackson</artifactId>
     </dependency>
+    <!-- support for jpa -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-reactive-panache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-reactive-pg-client</artifactId>
+    </dependency>
+    <!-- support for db migration -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-flyway</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
+    </dependency>
     <!-- support for junit tests -->
     <dependency>
       <groupId>io.quarkus</groupId>
