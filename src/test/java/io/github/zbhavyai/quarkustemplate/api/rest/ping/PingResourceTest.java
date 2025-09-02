@@ -1,4 +1,4 @@
-package io.github.zbhavyai.quarkustemplate.rest.ping;
+package io.github.zbhavyai.quarkustemplate.api.rest.ping;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;

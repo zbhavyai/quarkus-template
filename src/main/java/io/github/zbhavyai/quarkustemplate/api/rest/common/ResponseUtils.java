@@ -1,4 +1,4 @@
-package io.github.zbhavyai.quarkustemplate.rest.common;
+package io.github.zbhavyai.quarkustemplate.api.rest.common;
 
 import io.github.zbhavyai.quarkustemplate.dto.error.ErrorResponse;
 import jakarta.inject.Singleton;
