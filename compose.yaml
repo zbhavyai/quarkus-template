@@ -32,8 +32,7 @@ services:
     ports:
       - "8080:8080"
     healthcheck:
-      test:
-        [ "CMD", "curl", "--fail", "--silent", "--show-error", "http://localhost:8080/api/ping" ]
+      test: [ "CMD", "curl", "--fail", "--silent", "--show-error", "http://localhost:8080/api/ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
