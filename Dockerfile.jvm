@@ -1,5 +1,5 @@
 # Build Stage
-FROM eclipse-temurin:21-jdk AS build
+FROM docker.io/library/eclipse-temurin:21-jdk AS build
 WORKDIR /opt/app
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
@@ -8,7 +8,7 @@ COPY src src
 RUN ./mvnw package -DskipTests
 
 # Runtime Stage
-FROM eclipse-temurin:21-jre
+FROM docker.io/library/eclipse-temurin:21-jre
 LABEL org.opencontainers.image.title="Quarkus Template"
 LABEL org.opencontainers.image.description="Quarkus Template"
 LABEL org.opencontainers.image.source="https://github.com/zbhavyai/quarkus-template"
