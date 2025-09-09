@@ -19,5 +19,4 @@ WORKDIR /opt/app
 COPY --from=build /opt/app/target/quarkus-template-*-runner.jar quarkus-template-runner.jar
 HEALTHCHECK --interval=10s --timeout=5s --start-period=15s --retries=5 CMD curl --fail --silent --show-error http://localhost:8080/api/ping || exit 1
 EXPOSE 8080
-# ENV QUARKUS_LOG_CATEGORY__IO_GITHUB_ZBHAVYAI_QUARKUSTEMPLATE__LEVEL=DEBUG
 CMD ["java", "-jar", "/opt/app/quarkus-template-runner.jar"]
