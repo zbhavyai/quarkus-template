@@ -60,7 +60,7 @@ jobs:
           cache: maven
 
       - name: Build JAR
-        run: ./mvnw --batch-mode verify -DskipTests
+        run: ./mvnw --batch-mode verify -DskipTests -DskipITs
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4

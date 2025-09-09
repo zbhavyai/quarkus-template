@@ -22,23 +22,23 @@ prep:
 	@echo "Hook installed";
 
 clean: .deps-backend
-	@./mvnw --quiet clean;
+	@./mvnw --quiet --batch-mode clean;
 	@echo "Cleaned build artifacts";
 
 test: .deps-backend
-	@./mvnw clean test;
+	@./mvnw --batch-mode clean test;
 
 dev: .deps-backend
 	@./mvnw clean quarkus:dev
 
 format: .deps-backend
-	@./mvnw spotless:apply
+	@./mvnw --batch-mode spotless:apply
 
 build: .deps-backend
-	@./mvnw clean package -DskipTests
+	@./mvnw --batch-mode clean verify
 
 build-native:
-	@./mvnw clean package -Dnative -DskipTests
+	@./mvnw --batch-mode clean verify -Dnative
 
 run: .deps-backend
 	@java -jar ./target/quarkus-template-*-runner.jar

@@ -22,7 +22,7 @@ definitions:
         caches:
           - maven
         script:
-          - ./mvnw --batch-mode verify -DskipTests
+          - ./mvnw --batch-mode verify -DskipTests -DskipITs
         artifacts:
           - target/quarkus-template-*-runner.jar
 

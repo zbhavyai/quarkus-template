@@ -5,7 +5,7 @@ COPY pom.xml mvnw ./
 COPY .mvn .mvn
 RUN ./mvnw --batch-mode dependency:go-offline
 COPY src src
-RUN ./mvnw package -DskipTests
+RUN ./mvnw --batch-mode package -DskipTests -DskipITs
 
 # Runtime Stage
 FROM docker.io/library/eclipse-temurin:21-jre
