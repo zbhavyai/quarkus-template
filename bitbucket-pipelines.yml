@@ -1,6 +1,9 @@
 image: docker.io/atlassian/default-image:5
 
 definitions:
+  services:
+    docker:
+      memory: 2048
   steps:
     - step: &test
         name: Run tests
@@ -9,7 +12,11 @@ definitions:
           enabled: true
         caches:
           - maven
+        services:
+          - docker
         script:
+          - export TESTCONTAINERS_RYUK_DISABLED=true
+          - export TESTCONTAINERS_RYUK_CONTAINER_PRIVILEGED=false
           - ./mvnw --batch-mode test
         artifacts:
           - target/surefire-reports/**
