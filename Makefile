@@ -1,4 +1,4 @@
-CONTAINER_ENGINE := $(shell if command -v podman &>/dev/null; then echo podman; else echo docker; fi)
+CONTAINER_ENGINE := $(shell if command -v podman >/dev/null 2>&1; then echo podman; else echo docker; fi)
 
 .PHONY: prep clean test dev format build build-native run run-native container-build container-run container-stop container-logs container-destroy help
 
