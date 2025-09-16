@@ -8,7 +8,7 @@ import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
-public class PingResourceTest {
+class PingResourceTest {
 
   @Test
   void testPingEndpoint() {
