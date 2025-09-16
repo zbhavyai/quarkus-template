@@ -1,6 +1,6 @@
-package io.github.zbhavyai.quarkustemplate.rest.ping;
+package io.github.zbhavyai.quarkustemplate.api.rest.ping;
 
-import io.github.zbhavyai.quarkustemplate.rest.common.ResponseUtils;
+import io.github.zbhavyai.quarkustemplate.api.rest.common.ResponseUtils;
 import io.github.zbhavyai.quarkustemplate.service.ping.PingService;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;

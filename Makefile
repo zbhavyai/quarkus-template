@@ -1,6 +1,6 @@
-CONTAINER_ENGINE := $(shell if command -v podman &>/dev/null; then echo podman; else echo docker; fi)
+CONTAINER_ENGINE := $(shell if command -v podman >/dev/null 2>&1; then echo podman; else echo docker; fi)
 
-.PHONY: prep clean dev format build build-native run run-native container-build container-run container-stop container-logs container-destroy help
+.PHONY: prep clean test dev format build build-native run run-native container-build container-run container-stop container-logs container-destroy help
 
 define CHECK_DEPENDENCY
 	@for cmd in $(1); do \
@@ -22,8 +22,11 @@ prep:
 	@echo "Hook installed";
 
 clean: .deps-backend
-	@./mvnw --quiet clean;
+	@./mvnw --quiet --batch-mode clean;
 	@echo "Cleaned build artifacts";
+
+test: .deps-backend
+	@./mvnw clean test;
 
 dev: .deps-backend
 	@./mvnw clean quarkus:dev
@@ -32,10 +35,10 @@ format: .deps-backend
 	@./mvnw spotless:apply
 
 build: .deps-backend
-	@./mvnw clean package -DskipTests
+	@./mvnw clean verify
 
 build-native:
-	@./mvnw clean package -Dnative -DskipTests
+	@./mvnw clean verify -Dnative
 
 run: .deps-backend
 	@java -jar ./target/quarkus-template-*-runner.jar
@@ -62,6 +65,7 @@ help:
 	@echo "Available targets:"
 	@echo "  prep              - Install git hook"
 	@echo "  clean             - Clean build artifacts"
+	@echo "  test              - Run tests"
 	@echo "  dev               - Start app in development mode"
 	@echo "  format            - Format code using Spotless"
 	@echo "  build             - Build app in JVM mode"

@@ -7,11 +7,11 @@
 A **starter template** for building backend applications with [Quarkus](https://quarkus.io/), the _supersonic-subatomic_ Java framework.
 
 > [!NOTE]
-> This is not a production-ready backend. It's a boilerplate with extensions, configs, and workflows I find useful for new projects.
+> It's a boilerplate with extensions, configs, and workflows I find useful for new projects.
 
 ## :sparkles: Features
 
--  **Opinionated setup**
+-  **Setup**
 
    -  Predefined project structure and `application.properties`.
    -  Recommended VS Code settings (and some IntelliJ configs are [here](https://github.com/zbhavyai/fedora-setup/tree/main/roles/intellij_idea/files) if interested).
