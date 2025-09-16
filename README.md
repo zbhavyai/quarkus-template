@@ -12,6 +12,8 @@ A **starter template** for building backend applications with [Quarkus](https://
 ## :sparkles: Tech Stack and Features
 
 -  :zap: [Quarkus](https://quarkus.io/), the supersonic Java framework with fast boot, hot reload, and cloud-native design
+-  :cyclone: Reactive programming with Quarkus built-in support for [Mutiny](https://smallrye.io/smallrye-mutiny)
+-  :gear: [Hibernate Reactive](https://hibernate.org/reactive/) for fully non-blocking database access
 -  :elephant: [PostgreSQL](https://www.postgresql.org/) as the production-ready relational database with simple config
 -  :luggage: [Flyway](https://www.red-gate.com/products/flyway/community/) for version-controlled database migrations
 -  :open_file_folder: Defined project structure with ready-to-use [`application.properties`](src/main/resources/application.properties)
@@ -22,7 +24,7 @@ A **starter template** for building backend applications with [Quarkus](https://
 -  :broom: [Spotless](https://github.com/diffplug/spotless) on `validate` phase and with a `pre-commit` hook for style enforcement
 -  :test_tube: [JUnit](https://junit.org/) unit tests to keep code honest
 -  :whale: Containerization with Dockerfile and docker compose
--  :robot: Automatic [Podman](https://podman.io/)/[Docker](https://www.docker.com/) detection for local dev
+-  :otter: Automatic [Podman](https://podman.io/)/[Docker](https://www.docker.com/) detection for local dev
 -  :hammer_and_wrench: [Makefile](https://www.gnu.org/software/make/) targets for format, build, run, and container tasks
 -  :vertical_traffic_light: [GitHub Actions](https://github.com/features/actions) and [Bitbucket Pipelines](https://www.atlassian.com/software/bitbucket/features/pipelines) for CI/CD
 
