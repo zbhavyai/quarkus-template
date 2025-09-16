@@ -9,30 +9,22 @@ A **starter template** for building backend applications with [Quarkus](https://
 > [!NOTE]
 > It's a boilerplate with extensions, configs, and workflows I find useful for new projects.
 
-## :sparkles: Features
+## :sparkles: Tech Stack and Features
 
--  **Setup**
-
-   -  Predefined project structure and `application.properties`.
-   -  Recommended VS Code settings (and some IntelliJ configs are [here](https://github.com/zbhavyai/fedora-setup/tree/main/roles/intellij_idea/files) if interested).
-
--  **Code quality**
-
-   -  Formatting via [`google-java-format`](https://github.com/google/google-java-format).
-   -  Enforced with [Spotless](https://github.com/diffplug/spotless) and a pre-commit hook.
-
--  **Containerization**
-
-   -  `Dockerfile` + `docker-compose.yml`.
-   -  Automatic Podman/Docker detection.
-
--  **Developer tooling**
-
-   -  `Makefile` targets for formatting, building, running, and container workflows.
-
--  **CI/CD ready**
-
-   -  GitHub Actions + Bitbucket Pipelines for test, build, and release.
+-  :zap: [Quarkus](https://quarkus.io/), the supersonic Java framework with fast boot, hot reload, and cloud-native design
+-  :elephant: [PostgreSQL](https://www.postgresql.org/) as the production-ready relational database with simple config
+-  :luggage: [Flyway](https://www.red-gate.com/products/flyway/community/) for version-controlled database migrations
+-  :open_file_folder: Defined project structure with ready-to-use [`application.properties`](src/main/resources/application.properties)
+-  :pen: [VS Code](https://code.visualstudio.com/) settings included, [IntelliJ IDEA](https://www.jetbrains.com/idea/) configs [here](https://github.com/zbhavyai/fedora-setup/tree/main/roles/intellij_idea/files)
+-  :cloud: [Firebase Studio](https://firebase.studio/) settings for cloud-based development
+-  :art: [google-java-format](https://github.com/google/google-java-format) for consistent code formatting
+-  :page_facing_up: [.editorconfig](https://editorconfig.org/) for consistent coding styles across editors
+-  :broom: [Spotless](https://github.com/diffplug/spotless) on `validate` phase and with a `pre-commit` hook for style enforcement
+-  :test_tube: [JUnit](https://junit.org/) unit tests to keep code honest
+-  :whale: Containerization with Dockerfile and docker compose
+-  :robot: Automatic [Podman](https://podman.io/)/[Docker](https://www.docker.com/) detection for local dev
+-  :hammer_and_wrench: [Makefile](https://www.gnu.org/software/make/) targets for format, build, run, and container tasks
+-  :vertical_traffic_light: [GitHub Actions](https://github.com/features/actions) and [Bitbucket Pipelines](https://www.atlassian.com/software/bitbucket/features/pipelines) for CI/CD
 
 ## :rocket: Getting started
 
