@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import io.github.zbhavyai.quarkustemplate.dto.note.NoteCreateDTO;
 import io.github.zbhavyai.quarkustemplate.dto.note.NoteUpdateDTO;
-import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.MediaType;
@@ -108,6 +107,35 @@ public class NoteResourceTest {
   }
 
   @Test
+  void testNoteCreationWithNullTitle() {
+    String testContent = "Test note description";
+
+    given()
+        .when()
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(new NoteCreateDTO(null, testContent))
+        .post("/v1/note")
+        .then()
+        .statusCode(400)
+        .contentType(MediaType.APPLICATION_JSON)
+        .body("error", notNullValue());
+  }
+
+  @Test
+  void testNotePutNotAllowed() {
+    given()
+        .when()
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(new NoteUpdateDTO(null, null))
+        .put("/v1/note/1d7539f9-e9b7-4a06-9e6c-d5d6cf74d87a")
+        .then()
+        .statusCode(405)
+        .contentType(MediaType.APPLICATION_JSON)
+        .body("error", notNullValue());
+    ;
+  }
+
+  @Test
   void testNoteUpdateTitle() {
     String testUpdatedTitle = "Test updated title";
 
@@ -124,7 +152,6 @@ public class NoteResourceTest {
   }
 
   @Test
-  @TestTransaction
   void testNoteUpdateContent() {
     String testUpdatedContent = "Test updated content";
 
@@ -141,8 +168,45 @@ public class NoteResourceTest {
   }
 
   @Test
-  @TestTransaction
+  void testNoteUpdateToNull() {
+    given()
+        .when()
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(new NoteUpdateDTO(null, null))
+        .patch("/v1/note/1d7539f9-e9b7-4a06-9e6c-d5d6cf74d87a")
+        .then()
+        .statusCode(200)
+        .contentType(MediaType.APPLICATION_JSON)
+        .body("title", notNullValue())
+        .body("content", notNullValue());
+  }
+
+  @Test
+  void testNoteUpdateDoesNotExist() {
+    given()
+        .when()
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(new NoteUpdateDTO(null, null))
+        .patch("/v1/note/8aba169f-f901-4d71-94e2-1251690aa0c9")
+        .then()
+        .statusCode(404)
+        .contentType(MediaType.APPLICATION_JSON)
+        .body("error", notNullValue());
+  }
+
+  @Test
   void testNoteDeletion() {
     given().when().delete("/v1/note/1d7539f9-e9b7-4a06-9e6c-d5d6cf74d87a").then().statusCode(204);
+  }
+
+  @Test
+  void testNoteDeletionDoesNotExist() {
+    given()
+        .when()
+        .delete("/v1/note/8aba169f-f901-4d71-94e2-1251690aa0c9")
+        .then()
+        .statusCode(404)
+        .contentType(MediaType.APPLICATION_JSON)
+        .body("error", notNullValue());
   }
 }
