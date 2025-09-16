@@ -16,15 +16,18 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 @Path("/v1/note")
 public class NoteResource {
 
   private final NoteService service;
+  private final UriInfo uriInfo;
 
   @Inject
-  public NoteResource(NoteService service) {
+  public NoteResource(NoteService service, UriInfo uriInfo) {
     this.service = service;
+    this.uriInfo = uriInfo;
   }
 
   @GET
@@ -44,7 +47,13 @@ public class NoteResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Uni<Response> createNote(NoteCreateDTO dto) {
-    return service.createNote(dto).onItem().transform(ResponseUtils::handleSuccess);
+    return service
+        .createNote(dto)
+        .onItem()
+        .transform(
+            res ->
+                ResponseUtils.handleCreated(
+                    res, uriInfo.getRequestUriBuilder().path(res.id()).build()));
   }
 
   @PATCH
@@ -58,6 +67,6 @@ public class NoteResource {
   @DELETE
   @Path("/{id}")
   public Uni<Response> deleteNote(@PathParam("id") String id) {
-    return service.deleteNote(id).onItem().transform(ResponseUtils::handleSuccess);
+    return service.deleteNote(id).onItem().transform(ignored -> ResponseUtils.handleDeleted());
   }
 }
