@@ -5,6 +5,7 @@ import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotAllowedException;
+import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
@@ -20,13 +21,18 @@ public class ExceptionMapper {
   private static final Logger LOG = Logger.getLogger(ExceptionMapper.class);
 
   @ServerExceptionMapper(NotFoundException.class)
-  public Response handleResourceNotFound(NotFoundException e) {
+  public Response handleNotFound(NotFoundException e) {
     return ResponseUtils.handleFailure(Response.Status.NOT_FOUND, e.getMessage());
   }
 
   @ServerExceptionMapper(ConflictException.class)
   public Response handleConflict(ConflictException e) {
     return ResponseUtils.handleFailure(Response.Status.CONFLICT, e.getMessage());
+  }
+
+  @ServerExceptionMapper(NotAuthorizedException.class)
+  public Response handleUnauthorized(NotAuthorizedException e) {
+    return ResponseUtils.handleFailure(Response.Status.UNAUTHORIZED, e.getMessage());
   }
 
   @ServerExceptionMapper({
