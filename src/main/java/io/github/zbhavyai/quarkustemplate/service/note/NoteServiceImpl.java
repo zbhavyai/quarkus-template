@@ -5,13 +5,13 @@ import io.github.zbhavyai.quarkustemplate.dto.note.NoteCreateDTO;
 import io.github.zbhavyai.quarkustemplate.dto.note.NoteDTO;
 import io.github.zbhavyai.quarkustemplate.dto.note.NoteSummaryDTO;
 import io.github.zbhavyai.quarkustemplate.dto.note.NoteUpdateDTO;
-import io.github.zbhavyai.quarkustemplate.exceptions.ResourceNotFoundException;
 import io.github.zbhavyai.quarkustemplate.mapper.note.NoteMapper;
 import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 import org.jboss.logging.Logger;
 
@@ -42,7 +42,12 @@ public class NoteServiceImpl implements NoteService {
   public Uni<NoteDTO> getNoteById(String id) {
     LOG.debugf("getNoteById: id=\"%s\"", id);
 
-    return noteRepository.findById(id).map(NoteMapper::toDTO);
+    return noteRepository
+        .findById(id)
+        .onItem()
+        .ifNull()
+        .failWith(() -> new NotFoundException("Note not found"))
+        .map(NoteMapper::toDTO);
   }
 
   @WithTransaction
@@ -62,7 +67,7 @@ public class NoteServiceImpl implements NoteService {
         .findById(id)
         .onItem()
         .ifNull()
-        .failWith(() -> new ResourceNotFoundException("Note not found"))
+        .failWith(() -> new NotFoundException("Note not found"))
         .map(note -> NoteMapper.updateNote(note, dto))
         .map(NoteMapper::toDTO);
   }
@@ -77,6 +82,6 @@ public class NoteServiceImpl implements NoteService {
             deleted ->
                 deleted
                     ? Uni.createFrom().voidItem()
-                    : Uni.createFrom().failure(new ResourceNotFoundException("Note not found")));
+                    : Uni.createFrom().failure(new NotFoundException("Note not found")));
   }
 }
