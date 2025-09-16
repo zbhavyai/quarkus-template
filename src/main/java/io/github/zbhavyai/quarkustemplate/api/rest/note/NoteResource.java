@@ -5,6 +5,7 @@ import io.github.zbhavyai.quarkustemplate.dto.note.NoteCreateDTO;
 import io.github.zbhavyai.quarkustemplate.dto.note.NoteUpdateDTO;
 import io.github.zbhavyai.quarkustemplate.service.note.NoteService;
 import io.smallrye.mutiny.Uni;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -21,6 +22,7 @@ public class NoteResource {
 
   private final NoteService service;
 
+  @Inject
   public NoteResource(NoteService service) {
     this.service = service;
   }
