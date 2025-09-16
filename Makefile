@@ -26,19 +26,19 @@ clean: .deps-backend
 	@echo "Cleaned build artifacts";
 
 test: .deps-backend
-	@./mvnw --batch-mode clean test;
+	@./mvnw clean test;
 
 dev: .deps-backend
 	@./mvnw clean quarkus:dev
 
 format: .deps-backend
-	@./mvnw --batch-mode spotless:apply
+	@./mvnw spotless:apply
 
 build: .deps-backend
-	@./mvnw --batch-mode clean verify
+	@./mvnw clean verify
 
 build-native:
-	@./mvnw --batch-mode clean verify -Dnative
+	@./mvnw clean verify -Dnative
 
 run: .deps-backend
 	@java -jar ./target/quarkus-template-*-runner.jar
