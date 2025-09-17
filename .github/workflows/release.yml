@@ -26,12 +26,13 @@ jobs:
       - name: Download JAR
         uses: actions/download-artifact@v4
         with:
-          name: runner-jar-*
+          pattern: runner-jar-*
           path: target
+          merge-multiple: true
 
       - name: Pick up release JAR
         run: |
-          FILE=$(ls target/quarkus-template-*.jar | head -n 1)
+          FILE=$(ls target/quarkus-template-*-runner.jar | head -n 1)
           echo "RELEASE_JAR=${FILE}" >> ${GITHUB_ENV}
 
       - name: Create GitHub release
