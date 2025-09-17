@@ -1,11 +1,11 @@
 package io.github.zbhavyai.quarkustemplate.api.rest.common;
 
 import io.github.zbhavyai.quarkustemplate.exceptions.ConflictException;
+import io.github.zbhavyai.quarkustemplate.exceptions.UnauthorizedException;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotAllowedException;
-import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
@@ -30,8 +30,8 @@ public class ExceptionMapper {
     return ResponseUtils.handleFailure(Response.Status.CONFLICT, e.getMessage());
   }
 
-  @ServerExceptionMapper(NotAuthorizedException.class)
-  public Response handleUnauthorized(NotAuthorizedException e) {
+  @ServerExceptionMapper(UnauthorizedException.class)
+  public Response handleUnauthorized(UnauthorizedException e) {
     return ResponseUtils.handleFailure(Response.Status.UNAUTHORIZED, e.getMessage());
   }
 
