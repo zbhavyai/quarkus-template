@@ -24,6 +24,7 @@ A **starter template** for building backend applications with [Quarkus](https://
 -  :otter: Automatic [Podman](https://podman.io/)/[Docker](https://www.docker.com/) detection for local dev
 -  :hammer_and_wrench: [Makefile](https://www.gnu.org/software/make/) targets for format, build, run, and container tasks
 -  :vertical_traffic_light: [GitHub Actions](https://github.com/features/actions) and [Bitbucket Pipelines](https://www.atlassian.com/software/bitbucket/features/pipelines) for CI/CD
+-  :label: Artifact versioning based on Git SHA or tag, both in CI/CD and local builds
 
 ## :rocket: Getting started
 
