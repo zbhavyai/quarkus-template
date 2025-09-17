@@ -12,10 +12,11 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U quarkustemplate" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
     networks:
       - net
 
@@ -23,7 +24,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.jvm
-    image: quarkustemplate_backend:1.0.0
+      args:
+        REVISION: "${REVISION}"
+    image: quarkustemplate_backend:${REVISION}
     container_name: quarkustemplate_backend
     restart: unless-stopped
     environment:

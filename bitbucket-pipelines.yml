@@ -17,7 +17,12 @@ definitions:
         script:
           - export TESTCONTAINERS_RYUK_DISABLED=true
           - export TESTCONTAINERS_RYUK_CONTAINER_PRIVILEGED=false
-          - ./mvnw --batch-mode test
+          - if [ -n "${BITBUCKET_TAG}" ]; then
+            export REVISION="${BITBUCKET_TAG#v}";
+            else
+            export REVISION="${BITBUCKET_COMMIT::7}";
+            fi
+          - ./mvnw --batch-mode test -Drevision=${REVISION}
         artifacts:
           - target/surefire-reports/**
 
@@ -29,7 +34,12 @@ definitions:
         caches:
           - maven
         script:
-          - ./mvnw --batch-mode verify -DskipTests -DskipITs
+          - if [ -n "${BITBUCKET_TAG}" ]; then
+            export REVISION="${BITBUCKET_TAG#v}";
+            else
+            export REVISION="${BITBUCKET_COMMIT::7}";
+            fi
+          - ./mvnw --batch-mode verify -Drevision=${REVISION} -DskipTests -DskipITs
         artifacts:
           - target/quarkus-template-*-runner.jar
 
@@ -39,19 +49,20 @@ definitions:
         clone:
           enabled: true
         script:
+          - export REVISION="${BITBUCKET_TAG#v}"
           - ORIGINAL_JAR=$(ls target/quarkus-template-*-runner.jar | head -n 1)
-          - if [ -z "$ORIGINAL_JAR" ]; then
+          - if [ -z "${ORIGINAL_JAR}" ]; then
             echo "No JAR found"
             exit 1
             fi
-          - RELEASE_JAR="quarkus-template-${BITBUCKET_TAG}.jar"
-          - echo "Renaming $ORIGINAL_JAR -> target/$RELEASE_JAR"
-          - mv "$ORIGINAL_JAR" "target/$RELEASE_JAR"
+          - RELEASE_JAR="quarkus-template-${REVISION}.jar"
+          - echo "Renaming ${ORIGINAL_JAR} -> target/${RELEASE_JAR}"
+          - mv "${ORIGINAL_JAR}" "target/${RELEASE_JAR}"
         after-script:
           - pipe: atlassian/bitbucket-upload-file:0.7.4
             variables:
-              BITBUCKET_ACCESS_TOKEN: "$BITPIPE"
-              FILENAME: "target/$RELEASE_JAR"
+              BITBUCKET_ACCESS_TOKEN: "${BITPIPE}"
+              FILENAME: "target/${RELEASE_JAR}"
 
 pipelines:
   branches:
