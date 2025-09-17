@@ -1,4 +1,5 @@
 CONTAINER_ENGINE := $(shell if command -v podman >/dev/null 2>&1; then echo podman; else echo docker; fi)
+REVISION := $(shell git rev-parse --short HEAD)
 
 .PHONY: prep clean test dev format build build-native run run-native container-build container-run container-stop container-logs container-destroy help
 
@@ -26,7 +27,7 @@ clean: .deps-backend
 	@echo "Cleaned build artifacts";
 
 test: .deps-backend
-	@./mvnw clean test;
+	@./mvnw clean test -Drevision=$(REVISION);
 
 dev: .deps-backend
 	@./mvnw clean quarkus:dev
@@ -35,10 +36,10 @@ format: .deps-backend
 	@./mvnw spotless:apply
 
 build: .deps-backend
-	@./mvnw clean verify
+	@./mvnw clean verify -Drevision=$(REVISION)
 
 build-native:
-	@./mvnw clean verify -Dnative
+	@./mvnw clean verify -Dnative -Drevision=$(REVISION)
 
 run: .deps-backend
 	@java -jar ./target/quarkus-template-*-runner.jar
@@ -47,19 +48,19 @@ run-native:
 	@./target/quarkus-template-*-runner
 
 container-build: .deps-container
-	@$(CONTAINER_ENGINE) compose build
+	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose build
 
 container-run: .deps-container
-	@$(CONTAINER_ENGINE) compose up --detach
+	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose up --detach
 
 container-stop: .deps-container
-	@$(CONTAINER_ENGINE) compose down
+	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose down
 
 container-logs: .deps-container
-	@$(CONTAINER_ENGINE) compose logs --follow
+	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose logs --follow
 
 container-destroy: .deps-container
-	@$(CONTAINER_ENGINE) compose down --volumes --rmi local
+	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose down --volumes --rmi local
 
 help:
 	@echo "Available targets:"

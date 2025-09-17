@@ -24,7 +24,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.jvm
-    image: quarkustemplate_backend:1.0.0
+      args:
+        REVISION: "${REVISION}"
+    image: quarkustemplate_backend:${REVISION}
     container_name: quarkustemplate_backend
     restart: unless-stopped
     environment:
