@@ -26,22 +26,13 @@ jobs:
       - name: Download JAR
         uses: actions/download-artifact@v4
         with:
-          name: runner-jar-${{ github.sha }}
+          name: runner-jar-*
           path: target
 
-      - name: Rename JAR to match git tag
-        env:
-          CURRENT_TAG: ${{ github.ref_name }}
+      - name: Pick up release JAR
         run: |
-          ORIGINAL_JAR=$(ls target/quarkus-template-*-runner.jar | head -n 1)
-          if [ -z "$ORIGINAL_JAR" ]; then
-            echo "No JAR found"
-            exit 1
-          fi
-          NEW_JAR="target/quarkus-template-${CURRENT_TAG}.jar"
-          echo "Renaming $ORIGINAL_JAR -> $NEW_JAR"
-          mv "$ORIGINAL_JAR" "$NEW_JAR"
-          echo "RELEASE_JAR=$NEW_JAR" >> $GITHUB_ENV
+          FILE=$(ls target/quarkus-template-*.jar | head -n 1)
+          echo "RELEASE_JAR=${FILE}" >> ${GITHUB_ENV}
 
       - name: Create GitHub release
         env:
@@ -51,7 +42,7 @@ jobs:
         run: |
           LATEST_TAG=$(git tag -l "v*" | sort -V | tail -n 1)
 
-          if [ "$CURRENT_TAG" = "$LATEST_TAG" ]; then
+          if [ "${CURRENT_TAG}" = "${LATEST_TAG}" ]; then
             LATEST_FLAG="--latest"
           else
             LATEST_FLAG="--latest=false"

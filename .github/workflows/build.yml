@@ -22,6 +22,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION="${GITHUB_SHA::7}"
+          fi
+          echo "REVISION=${VERSION}" >> ${GITHUB_ENV}
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
@@ -31,12 +40,12 @@ jobs:
           cache: maven
 
       - name: Run tests
-        run: ./mvnw --batch-mode test
+        run: ./mvnw --batch-mode test -Drevision=${REVISION}
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports-${{ github.sha }}
+          name: test-reports-${{ env.REVISION }}
           path: target/surefire-reports/*
           retention-days: 7
           if-no-files-found: ignore
@@ -51,6 +60,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION="${GITHUB_SHA::7}"
+          fi
+          echo "REVISION=${VERSION}" >> ${GITHUB_ENV}
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
@@ -60,12 +78,12 @@ jobs:
           cache: maven
 
       - name: Build JAR
-        run: ./mvnw --batch-mode verify -DskipTests -DskipITs
+        run: ./mvnw --batch-mode verify -Drevision=${REVISION} -DskipTests -DskipITs
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
-          name: runner-jar-${{ github.sha }}
+          name: runner-jar-${{ env.REVISION }}
           path: target/quarkus-template-*-runner.jar
           retention-days: 7
           if-no-files-found: error
