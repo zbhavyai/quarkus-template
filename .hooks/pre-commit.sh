@@ -15,7 +15,9 @@ function format_checks() {
         return 0
     fi
 
-    (./mvnw --quiet --batch-mode spotless:check) || block "[ERROR] Formatting checks failed; run 'make format' to fix."
+    if ! ./mvnw --quiet --batch-mode spotless:check; then
+        block "[ERROR] Formatting checks failed; run 'make format' to fix."
+    fi
 }
 
 (format_checks) || exit $?
