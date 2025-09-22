@@ -9,10 +9,9 @@ function block() {
 }
 
 function format_checks() {
-    local staged
-    staged=$(git diff --name-only --cached --exit-code -- '*.java')
-    ret=$?
-    if [ $ret -eq 0 ]; then
+    mapfile -d '' -t staged_java < <(git diff --cached --name-only -z --diff-filter=ACMR -- '*.java' || true)
+
+    if ((${#staged_java[@]} == 0)); then
         return 0
     fi
 
