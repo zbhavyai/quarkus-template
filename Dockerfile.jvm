@@ -1,7 +1,7 @@
 # Build Stage
 FROM docker.io/library/eclipse-temurin:21-jdk AS build
-WORKDIR /opt/app
 ARG REVISION
+WORKDIR /opt/app
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
 RUN ./mvnw --batch-mode dependency:go-offline
