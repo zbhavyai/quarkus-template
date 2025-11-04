@@ -18,10 +18,11 @@ definitions:
         script:
           - export TESTCONTAINERS_RYUK_DISABLED=true
           - export TESTCONTAINERS_RYUK_CONTAINER_PRIVILEGED=false
-          - if [ -n "${BITBUCKET_TAG}" ]; then
-            export REVISION="${BITBUCKET_TAG#v}";
+          - |
+            if [ -n "${BITBUCKET_TAG}" ]; then
+              export REVISION="${BITBUCKET_TAG#v}";
             else
-            export REVISION="${BITBUCKET_COMMIT::7}";
+              export REVISION="${BITBUCKET_COMMIT::7}";
             fi
           - ./mvnw --batch-mode test -Drevision=${REVISION}
         artifacts:
@@ -40,10 +41,11 @@ definitions:
         caches:
           - maven
         script:
-          - if [ -n "${BITBUCKET_TAG}" ]; then
-            export REVISION="${BITBUCKET_TAG#v}";
+          - |
+            if [ -n "${BITBUCKET_TAG}" ]; then
+              export REVISION="${BITBUCKET_TAG#v}";
             else
-            export REVISION="${BITBUCKET_COMMIT::7}";
+              export REVISION="${BITBUCKET_COMMIT::7}";
             fi
           - ./mvnw --batch-mode verify -Drevision=${REVISION} -DskipTests -DskipITs
         artifacts:
@@ -65,9 +67,10 @@ definitions:
         script:
           - export REVISION="${BITBUCKET_TAG#v}"
           - ORIGINAL_JAR=$(ls target/quarkus-template-*-runner.jar | head -n 1)
-          - if [ -z "${ORIGINAL_JAR}" ]; then
-            echo "No JAR found"
-            exit 1
+          - |
+            if [ -z "${ORIGINAL_JAR}" ]; then
+              echo "No JAR found";
+              exit 1;
             fi
           - RELEASE_JAR="quarkus-template-${REVISION}.jar"
           - echo "Renaming ${ORIGINAL_JAR} -> target/${RELEASE_JAR}"
