@@ -4,6 +4,7 @@ definitions:
   services:
     docker:
       memory: 2048
+
   steps:
     - step: &test
         name: Run tests
@@ -24,7 +25,12 @@ definitions:
             fi
           - ./mvnw --batch-mode test -Drevision=${REVISION}
         artifacts:
-          - target/surefire-reports/**
+          upload:
+            - name: test-reports
+              type: scoped
+              paths:
+                - target/surefire-reports/**
+              capture-on: always
 
     - step: &build-jar
         name: Build JAR
@@ -41,13 +47,21 @@ definitions:
             fi
           - ./mvnw --batch-mode verify -Drevision=${REVISION} -DskipTests -DskipITs
         artifacts:
-          - target/quarkus-template-*-runner.jar
+          upload:
+            - name: runner-jar
+              type: shared
+              paths:
+                - target/quarkus-template-*-runner.jar
+              capture-on: success
 
     - step: &release
         name: Create release
         image: docker.io/library/eclipse-temurin:21-jdk
         clone:
-          enabled: true
+          enabled: false
+        artifacts:
+          download:
+            - runner-jar
         script:
           - export REVISION="${BITBUCKET_TAG#v}"
           - ORIGINAL_JAR=$(ls target/quarkus-template-*-runner.jar | head -n 1)
