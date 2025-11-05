@@ -76,7 +76,7 @@ definitions:
           - echo "Renaming ${ORIGINAL_JAR} -> target/${RELEASE_JAR}"
           - mv "${ORIGINAL_JAR}" "target/${RELEASE_JAR}"
         after-script:
-          - pipe: atlassian/bitbucket-upload-file:0.7.4
+          - pipe: atlassian/bitbucket-upload-file:0.7.5
             variables:
               BITBUCKET_ACCESS_TOKEN: "${BITPIPE}"
               FILENAME: "target/${RELEASE_JAR}"
