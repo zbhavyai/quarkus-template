@@ -3,7 +3,8 @@ image: docker.io/atlassian/default-image:5
 definitions:
   services:
     docker:
-      memory: 2048
+      type: docker
+      memory: 1024
 
   steps:
     - step: &test
