@@ -21,6 +21,7 @@
     <skipITs>false</skipITs>
     <surefire-plugin.version>3.5.3</surefire-plugin.version>
     <spotless.version>3.0.0</spotless.version>
+    <google-java-format.version>1.28.0</google-java-format.version>
     <revision>1.0.0</revision>
   </properties>
 
@@ -152,7 +153,7 @@
         <configuration>
           <java>
             <googleJavaFormat>
-              <version>1.28.0</version>
+              <version>${google-java-format.version}</version>
               <style>GOOGLE</style>
               <reflowLongStrings>true</reflowLongStrings>
               <formatJavadoc>true</formatJavadoc>
