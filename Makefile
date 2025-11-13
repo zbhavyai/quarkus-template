@@ -1,7 +1,7 @@
 CONTAINER_ENGINE := $(shell if command -v podman >/dev/null 2>&1; then echo podman; else echo docker; fi)
 REVISION := $(shell git rev-parse --short HEAD)
 
-.PHONY: prep clean test dev format build build-native run run-native container-build container-run container-stop container-logs container-destroy help
+.PHONY: prep clean test dev format check-updates build build-native run run-native container-build container-run container-stop container-logs container-destroy help
 
 define CHECK_DEPENDENCY
 	@for cmd in $(1); do \
@@ -34,6 +34,9 @@ dev: .deps-backend
 
 format: .deps-backend
 	@./mvnw spotless:apply
+
+check-updates: .deps-backend
+	@./mvnw versions:display-property-updates
 
 build: .deps-backend
 	@./mvnw clean verify -Drevision=$(REVISION)

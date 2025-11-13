@@ -22,6 +22,7 @@
     <surefire-plugin.version>3.5.3</surefire-plugin.version>
     <spotless.version>3.0.0</spotless.version>
     <google-java-format.version>1.28.0</google-java-format.version>
+    <versions.version>2.19.1</versions.version>
     <revision>1.0.0</revision>
   </properties>
 
@@ -159,6 +160,14 @@
               <formatJavadoc>true</formatJavadoc>
             </googleJavaFormat>
           </java>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>${versions.version}</version>
+        <configuration>
+          <ignoredVersions>(?i).*-(alpha|beta|m|rc|cr)([-.]?\d+)?</ignoredVersions>
         </configuration>
       </plugin>
     </plugins>
