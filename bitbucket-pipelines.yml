@@ -1,5 +1,10 @@
 image: docker.io/atlassian/default-image:5
 
+options:
+  runtime:
+    cloud:
+      version: "3"
+
 definitions:
   services:
     docker:
