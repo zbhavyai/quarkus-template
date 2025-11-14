@@ -2,7 +2,7 @@ name: quarkustemplate
 
 services:
   db:
-    image: postgres:17.0
+    image: postgres:18.1
     container_name: quarkustemplate_db
     restart: unless-stopped
     environment:
