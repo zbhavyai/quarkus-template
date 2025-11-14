@@ -1,0 +1,73 @@
+---
+version: 2
+
+updates:
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+    assignees:
+      - "zbhavyai"
+    open-pull-requests-limit: 1
+    groups:
+      all-maven-dependencies:
+        patterns:
+          - "*"
+    pull-request-branch-name:
+      separator: "-"
+    cooldown:
+      default-days: 5
+      semver-major-days: 15
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+    assignees:
+      - "zbhavyai"
+    open-pull-requests-limit: 1
+    groups:
+      all-gh-actions-dependencies:
+        patterns:
+          - "*"
+    pull-request-branch-name:
+      separator: "-"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+    assignees:
+      - "zbhavyai"
+    open-pull-requests-limit: 1
+    groups:
+      all-docker-dependencies:
+        patterns:
+          - "*"
+    pull-request-branch-name:
+      separator: "-"
+    ignore:
+      - dependency-name: "library/eclipse-temurin"
+        versions: [ ">=22" ]
+
+  - package-ecosystem: "docker-compose"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+    assignees:
+      - "zbhavyai"
+    open-pull-requests-limit: 1
+    groups:
+      all-compose-dependencies:
+        patterns:
+          - "*"
+    pull-request-branch-name:
+      separator: "-"
