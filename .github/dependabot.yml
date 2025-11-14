@@ -71,3 +71,8 @@ updates:
           - "*"
     pull-request-branch-name:
       separator: "-"
+    ignore:
+      - dependency-name: library/postgres
+        update-types:
+          - "version-update:semver-minor"
+          - "version-update:semver-patch"
