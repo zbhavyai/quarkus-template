@@ -72,6 +72,7 @@ help:
 	@echo "  test              - Run tests"
 	@echo "  dev               - Start app in development mode"
 	@echo "  format            - Format code using Spotless"
+	@echo "  check-updates     - Check for dependency updates in the pom.xml"
 	@echo "  build             - Build app in JVM mode"
 	@echo "  build-native      - Build app in native mode"
 	@echo "  run               - Run app in JVM mode"
