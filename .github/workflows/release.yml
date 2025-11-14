@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download JAR
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           pattern: runner-jar-*
           path: target
