@@ -4,9 +4,9 @@ WORKDIR /opt/app
 ARG REVISION
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
-RUN ./mvnw --batch-mode dependency:go-offline
+RUN --mount=type=cache,target=/root/.m2 ./mvnw --batch-mode dependency:go-offline
 COPY src src
-RUN ./mvnw --batch-mode package -Drevision=${REVISION} -DskipTests -DskipITs
+RUN --mount=type=cache,target=/root/.m2 ./mvnw --batch-mode package -Drevision=${REVISION} -DskipTests -DskipITs
 
 # Runtime Stage
 FROM docker.io/library/eclipse-temurin:21-jre
