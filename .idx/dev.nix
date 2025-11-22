@@ -31,7 +31,6 @@
       "redhat.vscode-xml"
       "redhat.vscode-yaml"
       "renesaarsoo.sql-formatter-vsc"
-      "sonarsource.sonarlint-vscode"
       "visualstudioexptteam.intellicode-api-usage-examples"
       "visualstudioexptteam.vscodeintellicode"
       "vscjava.vscode-java-debug"
