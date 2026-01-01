@@ -19,12 +19,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Download JAR
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           pattern: runner-jar-*
           path: target
