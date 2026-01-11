@@ -3,66 +3,51 @@ REVISION := $(shell git rev-parse --short HEAD)
 
 .PHONY: prep clean test dev format check-updates build build-native run run-native container-build container-run container-stop container-logs container-destroy help
 
-define CHECK_DEPENDENCY
-	@for cmd in $(1); do \
-		if ! command -v $$cmd >/dev/null 2>&1; then \
-			echo "Couldn't find $$cmd!"; \
-			exit 1; \
-		fi; \
-	done
-endef
-
-.deps-backend:
-	$(call CHECK_DEPENDENCY, java, javac)
-
-.deps-container:
-	$(call CHECK_DEPENDENCY, $(CONTAINER_ENGINE))
-
 prep:
 	@ln -sf $(CURDIR)/.hooks/pre-commit.sh .git/hooks/pre-commit
 	@echo "Hook installed";
 
-clean: .deps-backend
+clean:
 	@./mvnw --quiet --batch-mode clean;
 	@echo "Cleaned build artifacts";
 
-test: .deps-backend
+test:
 	@./mvnw clean test -Drevision=$(REVISION);
 
-dev: .deps-backend
+dev:
 	@./mvnw clean quarkus:dev
 
-format: .deps-backend
+format:
 	@./mvnw spotless:apply
 
-check-updates: .deps-backend
+check-updates:
 	@./mvnw versions:display-property-updates
 
-build: .deps-backend
+build:
 	@./mvnw clean verify -Drevision=$(REVISION)
 
 build-native:
 	@./mvnw clean verify -Dnative -Drevision=$(REVISION)
 
-run: .deps-backend
+run:
 	@java -jar ./target/quarkus-template-*-runner.jar
 
 run-native:
 	@./target/quarkus-template-*-runner
 
-container-build: .deps-container
+container-build:
 	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose build
 
-container-run: .deps-container
+container-run:
 	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose up --detach
 
-container-stop: .deps-container
+container-stop:
 	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose down
 
-container-logs: .deps-container
+container-logs:
 	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose logs --follow
 
-container-destroy: .deps-container
+container-destroy:
 	@REVISION=$(REVISION) $(CONTAINER_ENGINE) compose down --volumes --rmi local
 
 help:
