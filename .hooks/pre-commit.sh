@@ -8,6 +8,8 @@ function block() {
     exit 1
 }
 
+CHECKS="format_checks"
+
 function format_checks() {
     mapfile -d '' -t staged_java < <(git diff --cached --name-only -z --diff-filter=ACMR -- '*.java' || true)
 
@@ -20,4 +22,6 @@ function format_checks() {
     fi
 }
 
-(format_checks) || exit $?
+for CHECK in $CHECKS; do
+    ($CHECK) || exit $?
+done
