@@ -22,6 +22,7 @@ format:
 
 check-updates:
 	@./mvnw versions:display-property-updates
+	@./mvnw versions:display-extension-updates
 
 build:
 	@./mvnw clean verify -Drevision=$(REVISION)
