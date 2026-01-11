@@ -12,7 +12,7 @@ updates:
       - "zbhavyai"
     open-pull-requests-limit: 1
     groups:
-      all-maven-dependencies:
+      maven-dependencies:
         patterns:
           - "*"
     pull-request-branch-name:
@@ -31,7 +31,7 @@ updates:
       - "zbhavyai"
     open-pull-requests-limit: 1
     groups:
-      all-gh-actions-dependencies:
+      actions-dependencies:
         patterns:
           - "*"
     pull-request-branch-name:
@@ -47,7 +47,7 @@ updates:
       - "zbhavyai"
     open-pull-requests-limit: 1
     groups:
-      all-docker-dependencies:
+      docker-dependencies:
         patterns:
           - "*"
     pull-request-branch-name:
@@ -66,7 +66,7 @@ updates:
       - "zbhavyai"
     open-pull-requests-limit: 1
     groups:
-      all-compose-dependencies:
+      compose-dependencies:
         patterns:
           - "*"
     pull-request-branch-name:
